@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:58afddd113c9ca6c17c7d6fb379812e8567c8162a7ba2f9027fd844634b58f24",
+  "pageVersion": "sha256:196c66cd8395ede9d44a28d351033563b78a4be819c5d3c61b7659c9204d8212",
   "claims": [
     {
       "id": "claim_4f1bb9562e1846dc92e1f9ba3ad68ed8",
@@ -143,7 +143,7 @@
           "version": "repo-lines-v1:sha256:e4d1164e7b127f46b934bdf1adc5c6b8934944ae0fc49f2aeac3348809683565:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDQ2ODgyNDE1ZTdjYmFmNjM5ZTUwYzkzOWRhNjRkMTRiOTE1NGFkOGY1NTQwOTdkMWRiOTY1M2YxZDc5MjgyNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDY0YWNmOTZkNjRmNTgzYmM4NzRiZGI4MzIxOGM5YWZmNDE0NDNlMmEwZjZjMzFjZjE3ZDQ2NzhmM2E1ZmUxYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTEyNWVhZmM0NTQ1YWI3NjEwMWE5Zjg0ZThhZTJhYTcxYmNhNjRjYjZkOWNmYmVjZjM3MTA2OTM3NTAxZWQxOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzJjOThlYTZhNjdjZWQ3ZmZkNjU3ZmMyMTFmNDUzMGE1M2UyZDhlNzBiYjM4ZTc4NDhhZDI0ZmUyMGI0NDE0YSJ9"
         },
         {
-          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L33-L37",
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L52-L56",
           "version": "repo-lines-v1:sha256:c43d48e62b1c9cd7cca5853866811b0fe158343fad0c9309de4b015154890866:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY0YTQwOTFkYjAwN2FjMzY3MThhMTc1YjQxNzBiZWI5OTgyZGZmMGU4NjVlY2ViMzVjZTZmNjc3ZDUzZTYxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTk1YzA3NTVhNTg1ZGVlMmZhMzYwNzcxN2U2NGI1N2ZjODZiOWQ2NzBiMDkzNDY1ZDM4Yjk2YTdhYzAzZmRhZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzg5NjQ2MjJiNjRlZDk1NmEzY2Y0MmQ5OGFlOWIwMTY1MjY5ODMxNWUwNzg2M2EzMzA5NTlhNjI0NzUwNmEyZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzBhYzU0NGEwMjgzZGRmODk4NDEyYzM2NzgxMjlmMGFjNzNjZjkyNmM1M2NhMGI1N2Y3YWI1NTM2Y2Q1NDdiZCJ9"
         },
         {
@@ -161,8 +161,8 @@
           "version": "repo-lines-v1:sha256:638968c76fc24d1ff16df4ce92afca721eafa8130531ef241d38d0983502bd1c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOTc0OGUxMWRmYmZjNDEyYzAwYzNlNDRjY2RkZDg5YmE5Y2NiNDE0YWViYTkwNTIyNjE1YmM3MzA1YzA3ZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNzlhMmYxMGM4MDM5NDNkZjg0YzZiZGIxYjM4ZGM4ZGQzZGQ0NTcxNmEyMzI0MDU4MDA1ZWJhM2U4NTkwYzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5NTdjOGYzZDgwZTlmZmNmZjhiMzFiMzY1OGNjYjI4N2ExMWZjNTU0MjNkZmRmOGZkOGQ4Y2U5NjhiYmFhNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyODU4MzU3MjgzMTM2YmU4NmE1NmFlYjI1ODQ2ZjEwNTAzMDhiNWI4OTY2NDg3YTk4MmU4NGNjNDc5ZmRkNTkifQ"
         },
         {
-          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L7-L32",
-          "version": "repo-lines-v1:sha256:6c143f4c2bda61b7abbf1abf05cc3d52cfb9e69ce11ae7a66c64591d8915114d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxZGFmM2QwMThlMWFlZjAzNTVlM2JhNzZjNmJlYmM2NTllNTRjY2I5YzZlY2UzNTkwZmVkNzA0OTVkZjk0MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNjA1OTI4NjlmN2U4ZmJhYTMxYjlkNmMzNTc1YmE3MjA1M2EzYTVjOGJhMjU1OTE2NjczOTk5MTA0Njk3OTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzNmMwYTZjMmMyZTI4OThkMGY3ODQwODI2ZjE4NDRlMjc2ZWUxZTJhYzc2N2E3ZTg3NTZmYjg1ZTQ0ODExN2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliYzc5NTMyMGVhY2Y5YjYzM2E3OTYxZWNhYzA1OWE0NjZmZTc4NWJlOTAzNmM0ODAzNjdiMzVmNzk3OGUwNjUifQ"
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L7-L51",
+          "version": "repo-lines-v1:sha256:1084cabfdcaab762a60e6612c3ffc74d3e20bb442fb77e8eee1f29d3a755a952:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxZGFmM2QwMThlMWFlZjAzNTVlM2JhNzZjNmJlYmM2NTllNTRjY2I5YzZlY2UzNTkwZmVkNzA0OTVkZjk0MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNjA1OTI4NjlmN2U4ZmJhYTMxYjlkNmMzNTc1YmE3MjA1M2EzYTVjOGJhMjU1OTE2NjczOTk5MTA0Njk3OTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzNmMwYTZjMmMyZTI4OThkMGY3ODQwODI2ZjE4NDRlMjc2ZWUxZTJhYzc2N2E3ZTg3NTZmYjg1ZTQ0ODExN2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliYzc5NTMyMGVhY2Y5YjYzM2E3OTYxZWNhYzA1OWE0NjZmZTc4NWJlOTAzNmM0ODAzNjdiMzVmNzk3OGUwNjUifQ"
         },
         {
           "resource": "repo://examples/openwiki-update.yml#L31-L90",
@@ -179,8 +179,8 @@
           "version": "repo-lines-v1:sha256:c7449a8da99e9d663c04dbef5e5b5f15a3056d3c27b5fd022eaf4ddeb661495f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwODczYzgwNTA2YTFkNTg5Zjc1NTU1OWU1ZjdmNTk3MzFmNzJmNzdhM2MwNWI2M2JiNDJkNTQ5NDNiZWFmNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNzlhMmYxMGM4MDM5NDNkZjg0YzZiZGIxYjM4ZGM4ZGQzZGQ0NTcxNmEyMzI0MDU4MDA1ZWJhM2U4NTkwYzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIzOGMxYzk3YmM0YzYxZTUwYzVmMWUwMTliZTgyZTUxNzI4NjU3N2YzZWEzMGNkZWVmOTNkODBlMjAyNDk0NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyODU4MzU3MjgzMTM2YmU4NmE1NmFlYjI1ODQ2ZjEwNTAzMDhiNWI4OTY2NDg3YTk4MmU4NGNjNDc5ZmRkNTkifQ"
         },
         {
-          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L13-L32",
-          "version": "repo-lines-v1:sha256:c10c65273f793f3fe28fa42db98b2e1fd1723d129adcc5f4c6c9fff23412404a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNDE5OTQ2NGQxOWVkOTZmY2EyNGY2Y2E3NjI4MTljOWJkNzE3Y2ZlYWEzZDlmODA4ZmI1NDJjODU5Njk1ZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNjA1OTI4NjlmN2U4ZmJhYTMxYjlkNmMzNTc1YmE3MjA1M2EzYTVjOGJhMjU1OTE2NjczOTk5MTA0Njk3OTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkMGVhZjExYmVmNDdjZjA1ZmNiNDU5MmY5MGNhYWQwNDVmNzhlMzQ1MzA1YzMyNzM0M2JmNDNlOGNkNTM0ZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliYzc5NTMyMGVhY2Y5YjYzM2E3OTYxZWNhYzA1OWE0NjZmZTc4NWJlOTAzNmM0ODAzNjdiMzVmNzk3OGUwNjUifQ"
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L13-L51",
+          "version": "repo-lines-v1:sha256:e0b2e46cc3a88f0d4aca90777d013944e25f9bf20c97cd78dfafb20068ea805b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNDE5OTQ2NGQxOWVkOTZmY2EyNGY2Y2E3NjI4MTljOWJkNzE3Y2ZlYWEzZDlmODA4ZmI1NDJjODU5Njk1ZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNjA1OTI4NjlmN2U4ZmJhYTMxYjlkNmMzNTc1YmE3MjA1M2EzYTVjOGJhMjU1OTE2NjczOTk5MTA0Njk3OTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkMGVhZjExYmVmNDdjZjA1ZmNiNDU5MmY5MGNhYWQwNDVmNzhlMzQ1MzA1YzMyNzM0M2JmNDNlOGNkNTM0ZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliYzc5NTMyMGVhY2Y5YjYzM2E3OTYxZWNhYzA1OWE0NjZmZTc4NWJlOTAzNmM0ODAzNjdiMzVmNzk3OGUwNjUifQ"
         }
       ]
     },
@@ -309,7 +309,7 @@
           "version": "repo-lines-v1:sha256:c55dbcf1c532eae193d3b1e09d113a09398ce60bcf46ef08b2af290a50ef5c52:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU1ZGJjZjFjNTMyZWFlMTkzZDNiMWUwOWQxMTNhMDkzOThjZTYwYmNmNDZlZjA4YjJhZjI5MGE1MGVmNWM1MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU1ZGJjZjFjNTMyZWFlMTkzZDNiMWUwOWQxMTNhMDkzOThjZTYwYmNmNDZlZjA4YjJhZjI5MGE1MGVmNWM1MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmE2NTYxZmM4ODhkNTdkMDc3MmRlMjEyMDAzNjE4MzVjMTNhNzkzMDQ1MTE1Y2ZlOTk0ZGYyY2UzMTE2ZmU5MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2M4ZWQ0OTRlYTNkMWU4MTgzMzRhNTUzYmE1Y2UxMWU0MGI1YjgyNWY5ZGMwNGM3ZjAzZWFhNTRkZThjZTJmZCJ9"
         },
         {
-          "resource": "repo://src/config/constants.ts#L1122-L1128",
+          "resource": "repo://src/config/constants.ts#L1146-L1152",
           "version": "repo-lines-v1:sha256:2c2c9c78b16ad027afeb425dff69e42631b01d0bf34a26fed2eefefcbfa869f3:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGRkMjY1ZDk2OWYxZWJlMGNhZmYwMWIyZDNkYWIwZDBkYzcyOWVmZDRiOGVhY2RmMjBlMzQxMGNkYWFkNmM0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTQ0YzFjODA3ZTc3ODA1Yzk1NjlkNTg5OTY4NDYyMGEyNjJiY2E0NTQ5ZTMyMDNiMjQ1NjRiNWJmODdhMjRmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTM0ZDliODk2OWI0Nzc1MzgxMjNhZjQxNzZkY2JiNTdhOTg3YjIwZGYxMGY3ODk1YzA3MzA0OTcwOWFhZjAyYyJ9"
         }
       ]
@@ -323,10 +323,44 @@
           "version": "repo-lines-v1:sha256:fdfc63c7c509f3962429207db3e666da9535cca806fc471f555cc15aa1f50261:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI4M2FhNTY2NzFmOGNjNDQyM2U4ZjdlNDQyYjA5NmJlZTZkMDk4ZWI3OWE3YTliNTkwMDJjOTNiZTFkNjgwNDRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
         }
       ]
+    },
+    {
+      "id": "claim_73e4f41589f04108922bdace2eca09dd",
+      "statement": "The GitLab CI example authenticates the push without embedding credentials in a remote URL: it disables shell tracing (set +x), writes a credential-helper script answering Git's get query with username oauth2 and password $OPENWIKI_GITLAB_TOKEN to a mktemp file (mode 700, removed by an EXIT trap after the push), and invokes git -c credential.helper= -c credential.helper=\"$credential_helper\" push \"https://${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git\", so the token never persists in remote URLs or appears in traced commands; the merge request is then opened via the GitLab REST API (${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests) with the token supplied as a PRIVATE-TOKEN header, targeting CI_DEFAULT_BRANCH.",
+      "evidence": [
+        {
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L24-L53",
+          "version": "repo-lines-v1:sha256:a0e3e29b412fef31a28ae2d44b42cab4b7525717f8f3c7d83776079a2c21e7d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNmQ4MDg0YjlmMzRmNDA0MTNjZGQyMGVlYjUxYTlmNDQ2M2QzOWIyNGY2MTFkYjkwYjRmYjM0YTNlNTBkZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjYmQ5YmM3N2IzOWNkMzBmM2ViMzE5OGJkMGEzZTM0NWRkZTYwYzY5YTZkODQzZTAwMDE3ZTUzYzFkYTUzOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4M2Y1NWFkMzZiMTAyNjY5NjRiNzE4YjFkMGQ4ZDdkNzAxYTI1N2Q4NzQxZWM0ZWMyN2QzODk1NzBhYjE0MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlODE0NWJjYTFkNGQzN2EyNjJjZjRiYzljZjkyZTliNmMyODc1ODFjM2M2NTA3OTk5MDlkYjczZTRkOTE2ZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eaa1d57e507c49a5bbb41ae62f6f5ddf",
+      "statement": "The Bitbucket Pipelines example still authenticates the push by embedding the token in the remote URL (https://x-token-auth:${OPENWIKI_BITBUCKET_TOKEN}@bitbucket.org/...), which leaves the credential in git remote configuration for the life of the job, making the GitLab example the secure-credential variant.",
+      "evidence": [
+        {
+          "resource": "repo://examples/openwiki-update.bitbucket-pipelines.yml#L29-L34",
+          "version": "repo-lines-v1:sha256:55c2f012cc7ebaf9038cb0ed9b062d7336cc9ebf925f2fbe4e7ff11e9e843999:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjA0NTQwN2YxNDgzZjIwYzY4ZDAxODQyNzA5OWZkNjg2ZDM3ZGVkODcxZjRhZGMyNmMwNmUwMTdlZGFlMDlhNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYyMmRlOTNmNDZmODEyNzY1NTA3NDY5MTM2YzM0NTRiYzE2MzY1MzI1MGIzNTExMTUwZWM5NmY4MmQyYmU0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmU0NmYxN2IwN2RiOWVhZmViZmFmOWQxMjIyNjVlMDJlMGM1YzZlOGU0ZTIzOGMyZDU5ZTI0YzI3ODZmZTYzZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDM1YWJiYjliZjExOGIwM2E3NjRhYjU5NDNkZDUwNmEyMTMzNTBmYjdlOTMxYTFjNmY4ZDgwOWFiOTFhZDZlYyJ9"
+        },
+        {
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L26-L44",
+          "version": "repo-lines-v1:sha256:7d05a003cd80c276e27bf6a0a5ef4a520e97e6384c03e4ef02e59fa66adeb601:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0Y2NkNWE0ZjYzNjQ2ZDE5MWEyZmM4ZjliNjg5MmNkZjI0OGFjOGNjMzMyNDFmYzY0ZjQzMGYzYWJmMmJjNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNmQ4MDg0YjlmMzRmNDA0MTNjZGQyMGVlYjUxYTlmNDQ2M2QzOWIyNGY2MTFkYjkwYjRmYjM0YTNlNTBkZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmOTE2ZmQ0ODIyZTA0MzAxNzNjOTM5NTA3MzcwNzI4N2ZlNGRhZjJhZjZlMjM2NmI4M2Q0NmMwYWQ3Zjk3Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhMGM4MGYzYTY2ZGJlOTIwOTMyZjNkM2IwOTk0Nzg1NjIxZjRlNmI5NWM0OTE3ZjA2Y2FlM2Q4Mjg2OGRjMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd15dca0f0334d8f8f2e187827274621",
+      "statement": "test/gitlab-example-security.test.ts pins the GitLab example's credential hygiene: it fails if the example matches an authenticated-remote-URL pattern (https://user@host) or loses any of set +x, credential.helper=\"$credential_helper\", the quoted heredoc <<'EOF', the \"$OPENWIKI_GITLAB_TOKEN\" helper reference, or the tokenless push URL built from CI_SERVER_HOST/CI_PROJECT_PATH.",
+      "evidence": [
+        {
+          "resource": "repo://test/gitlab-example-security.test.ts#L13-L27",
+          "version": "repo-lines-v1:sha256:755457bdb52b37235376b670f2e7fc37415379b368f3de3fa9b025024435fa58:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2ODI2ODhkZDQxZDExMjYxZTZiZjFlZDQwNjNmZjZiN2E3NmY1ZDRmZjhlYTY3YzNiNGExYTk3NmQxY2Q1NTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxOTA5OGMwNWU5OWUwNzA1ZTgyZGU4ZGIyMGIwMGU2NWU4ZWQxOGIwMzEwYWM5N2I3ODE2NDIyOWFlZTRhZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
-    "by": "openwiki/0.7.3",
-    "at": "2026-11-02T08:07:01.639Z"
+    "by": "openwiki/0.9.0",
+    "at": "2026-11-24T08:06:11.729Z"
   }
 }

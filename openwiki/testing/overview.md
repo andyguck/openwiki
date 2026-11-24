@@ -16,8 +16,12 @@ sources:
     resource: repo://evals/ledger/run/runner.test.ts
   - id: openwiki-source-33844b1c2c98eca457fd6142
     resource: repo://evals/ledger/tsconfig.json
+  - id: openwiki-source-d9da31b32fa9d32e1fa4564b
+    resource: repo://examples/openwiki-update.gitlab-ci.yml
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
+  - id: openwiki-source-0ad86abe7202c4e4d6897f34
+    resource: repo://src/agent/agent-backend.ts
   - id: openwiki-source-6cb3236b8c1412a26d832fcf
     resource: repo://src/agent/repository-runner.ts
   - id: openwiki-source-69abc6f0f641147820a274bc
@@ -32,6 +36,8 @@ sources:
     resource: repo://src/integrations/core/session-manager.ts
   - id: openwiki-source-eab9328975981f427c4218d0
     resource: repo://src/integrations/mcp/server.ts
+  - id: openwiki-source-0770fdf80fcdcaa96b06ee77
+    resource: repo://test/agent/conversation-history-offload.test.ts
   - id: openwiki-source-76702f01df0808033c14cf17
     resource: repo://test/agent/create-model-entra.test.ts
   - id: openwiki-source-21fe6d4741a8225393c37599
@@ -110,6 +116,8 @@ sources:
     resource: repo://test/generation/run-state.test.ts
   - id: openwiki-source-a0cec66bd3bed0c13c668ff0
     resource: repo://test/git-repo-connector.test.ts
+  - id: openwiki-source-619574be5673e1bc96e66fd0
+    resource: repo://test/gitlab-example-security.test.ts
   - id: openwiki-source-caa199fea0a0f4f89151a0c8
     resource: repo://test/ingest-all-connectors.test.ts
   - id: openwiki-source-224b03172757408e1b558fa7
@@ -150,10 +158,10 @@ sources:
     resource: repo://tsconfig.json
   - id: openwiki-source-fbadcd8591b65031efaaedce
     resource: repo://vitest.config.ts
-generated: { by: "openwiki/0.9.0", at: "2026-11-11T08:06:00.631Z" }
+generated: { by: "openwiki/0.9.0", at: "2026-11-24T08:06:11.729Z" }
 verified:
   - by: openwiki/0.9.0
-    at: 2026-11-11T08:06:00.631Z
+    at: 2026-11-24T08:06:11.729Z
 ---
 
 # Testing Guide
@@ -301,7 +309,7 @@ matching path. The most important mappings:
 
 | Test directory                                                                                                                                            | Source subsystem it validates                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `test/agent/`                                                                                                                                             | `src/agent/` — model creation (incl. the Mistral createModel branch), middleware, prompts (planner/page-worker and system prompts), Vertex AI surface dispatch, streaming, redaction (incl. `MISTRAL_API_KEY`), the repository runner (including parallel page workers, retry-before-skip, and worker-response coercion), update-noop fast-skip, repository source fingerprinting, OKF middleware, frontmatter validation, the wiki finalizer, the wiki translation middleware, OpenAI-compatible Entra (Microsoft Entra ID) token-provider and model-auth wiring, and the wiki internal-link validator plus its dogfood test |
+| `test/agent/`                                                                                                                                             | `src/agent/` — model creation (incl. the Mistral createModel branch), middleware, prompts (planner/page-worker and system prompts), Vertex AI surface dispatch, streaming, redaction (incl. `MISTRAL_API_KEY`), the repository runner (including parallel page workers, retry-before-skip, and worker-response coercion), update-noop fast-skip, repository source fingerprinting, OKF middleware, frontmatter validation, the wiki finalizer, the wiki translation middleware, the composite-backend glob/grep safety rejections and conversation-history/skills virtual mount permissions (`conversation-history-offload.test.ts`), OpenAI-compatible Entra (Microsoft Entra ID) token-provider and model-auth wiring, and the wiki internal-link validator plus its dogfood test |
 | `test/claims/`                                                                                                                                            | `src/claims/` — grounded-claim core, the code claim brain, and evidence resolution                            |
 | `test/connectors/`                                                                                                                                        | `src/connectors/` — connector config, resilient fetch, MCP client/runtime, and per-source ingestion           |
 | `test/generation/`                                                                                                                                        | `src/generation/` — repository run lifecycle (including per-baseline fast-forward caching, the commit-messages-since-baseline planner context, and begin-view bounding), page planning, page-manifest persistence, and run-state persistence                                 |
@@ -663,6 +671,63 @@ whitespace-only page skipping, unchanged-translation no-write, array-shaped
 backend content flattening, structured model-output flattening (text blocks kept,
 non-text blocks dropped), and a language tag `Intl` cannot name falling back to
 its bare value in the prompt.
+
+`test/agent/conversation-history-offload.test.ts` guards the
+`createAgentBackend` composite backend (`src/agent/agent-backend.ts`) and its
+virtual mounts rather than a prompt surface. It builds a real
+`OpenWikiLocalShellBackend` in `mkdtemp` temp dirs and wraps it with
+`createAgentBackend` (passing its own `historyDir`/`skillsDir`), then exercises
+the **glob/grep safety rejections** layered in front of DeepAgents'
+`CompositeBackend`:
+
+- **Parenthesized patterns are disabled for safety.** A `test.each` over both
+  `docsOnly` modes and the three virtual roots (`/`, `/skills/`, and
+  `CONVERSATION_HISTORY_MOUNT`) feeds a battery of parenthesized patterns
+  (`+(*)`, `+(*a)`, `*(a*)`, `**/+(*a).ts`, `{+(*a),*.ts}`, `+{(}*a{)}`,
+  `\\+\\(*a\\)`, `[+](a+)+$`) to both `backend.glob` and `backend.grep` and
+  asserts every one returns an error containing `"disabled for safety"` — and
+  that the underlying `CompositeBackend.glob`/`grep` are never called. Ordinary
+  filters are preserved: `backend.glob("src/**/*.{ts,tsx}", "/")` reaches the
+  backend, and a literal `grep` query with a simple `*.{ts,tsx}` glob is
+  forwarded unchanged.
+- **Brace-nesting overflow is rejected before expansion.** A pattern with more
+  than 100 levels of `{`/`}` nesting (`"{".repeat(101)}…"}".repeat(101)`,
+  including the bracket-wrapped form) returns
+  `"Glob pattern nesting is too deep. Retry with a simpler pattern."` without
+  touching the backend, while a normal `src/*.{ts,tsx}` brace pattern still
+  expands. The same overflow check guards `grep`'s glob argument (a 101-deep
+  brace glob rejects without calling the backend).
+- **Broad-glob recursion overflow is caught.** When the underlying
+  `OpenWikiLocalShellBackend.glob` throws
+  `RangeError("Maximum call stack size exceeded")` (armed with
+  `mockRejectedValueOnce`), `backend.glob("**/*", "/")` converts it to the
+  tool error `"Glob search was too broad. Retry with a narrower path or pattern."`
+  rather than propagating.
+
+The suite also pins the **conversation-history and skills virtual mounts**:
+
+- **History offload lands outside the repo.** Writing
+  `${CONVERSATION_HISTORY_MOUNT}session_<id>.md` persists to the separate
+  `historyDir` (a `FilesystemBackend` mounted at `/conversation_history/`), and
+  no `conversation_history` directory is created inside `repoDir`. Follow-up
+  offloads append via `backend.edit` and the agent can read the offloaded
+  history back through the same virtual path. This holds for both `docsOnly`
+  (summarization offload) and non-docs-only (chat-mode history offload) runs.
+- **Agent-layer tool writes to the history mount are denied.**
+  `AGENT_FILESYSTEM_PERMISSIONS` contains exactly one `deny` write rule for
+  `${CONVERSATION_HISTORY_MOUNT}**` and a `deny` write rule for `/skills/**`,
+  so the model's filesystem tools cannot write into the mounts (a prompt
+  injection in an analyzed repository cannot persist attacker content the
+  summarization middleware later reads back), even though the middleware writes
+  through the backend directly and is unaffected by those permissions.
+- **The mount prefix stays in sync with DeepAgents.** The
+  `mount prefix matches deepagents' historyPathPrefix default` test drives the
+  real `createSummarizationMiddleware` (with no `historyPathPrefix` override,
+  since `createDeepAgent` exposes none) through a recording backend and asserts
+  the offload path's directory equals `CONVERSATION_HISTORY_MOUNT`, so a
+  dependency bump that moves DeepAgents' default offload location fails here
+  instead of silently reintroducing a mount mismatch.
+
 
 ### Claims: nested layout
 
@@ -1383,6 +1448,8 @@ file or directory, or `-t "<name>"` to scope by test name.
 - **Mistral setup-wizard provider article:** `pnpm exec vitest run test/setup/credentials/steps.test.ts -t "orderedSetupSteps"` (the `mistral` provider's `provider` → `api-key` → `model` → `langsmith` step order).
 - **Wiki internal-link validator (dogfood):** `pnpm exec vitest run test/agent/wiki-link-validator-dogfood.test.ts` (checks the checked-in `openwiki/` tree passes validation) or `pnpm exec vitest run test/agent/wiki-link-validator.test.ts` (scoped unit cases).
 - **Wiki translation middleware:** `pnpm exec vitest run test/agent/translation-middleware.test.ts` (resolveTranslationPlan switching/sweep rules, beforeAgent full-pass translation, pending-marker retry on model failure/output-limit truncation, per-page failure isolation, and array/structured content flattening).
+- **Composite-backend glob/grep safety and conversation-history/skills mounts:** `pnpm exec vitest run test/agent/conversation-history-offload.test.ts` (parenthesized-pattern `"disabled for safety"` rejection across `/`, `/skills/`, and `CONVERSATION_HISTORY_MOUNT`; brace-nesting overflow; broad-glob `Maximum call stack size exceeded` → bounded error; history-offload persistence outside the repo; `AGENT_FILESYSTEM_PERMISSIONS` deny rules for the history and skills mounts; and the DeepAgents `historyPathPrefix` sync check), or `-t "rejects parenthesized file patterns before routing"` / `-t "rejects excessive brace nesting before glob expansion"` / `-t "returns a tool error when a glob exceeds the call stack"` / `-t "denies agent-layer tool writes to the history mount"` / `-t "mount prefix matches deepagents' historyPathPrefix default"` for the individual contracts.
+- **GitLab CI example credential hygiene:** `pnpm exec vitest run test/gitlab-example-security.test.ts` (parses `examples/openwiki-update.gitlab-ci.yml` and asserts no `user@` URLs, `set +x`, `credential.helper="$credential_helper"`, `<<'EOF'`, `"$OPENWIKI_GITLAB_TOKEN"`, and the `CI_SERVER_HOST`/`CI_PROJECT_PATH` push).
 - **CLI error diagnostics (`--debug`):** `pnpm exec vitest run test/cli/diagnostics/error-diagnostics.test.ts` (stack extraction/redaction/truncation, HTTP status, OpenRouter metadata, `previous_errors` cap).
 - **Env parsing/formatting:** `pnpm exec vitest run test/config/env.test.ts` (double-quoted unescaping, carriage returns, Windows-path regression, the OpenAI-compatible Entra auth round-trip, `MANAGED_ENV_KEYS` membership including `OPENAI_COMPATIBLE_AUTH`/`OPENAI_COMPATIBLE_ENTRA_SCOPE`, `OPENWIKI_PAGE_CONCURRENCY`, `BOB_BASE_URL`, `MISTRAL_BASE_URL`, `OPENROUTER_BASE_URL`, and the hosted OpenAI-compatible base URLs).
 - **Provider constants (incl. page-concurrency and Bob/Copilot/OpenRouter base-URL overrides):** `pnpm exec vitest run test/config/constants.test.ts` (model-id validation, provider resolution, `resolvePageConcurrency`, `resolveProviderBaseUrl` defaults/overrides for bob/baseten/fireworks/nvidia/copilot/openrouter, retry/max-token/stream-timeout/reasoning surfaces).
@@ -1411,3 +1478,35 @@ real Mermaid DOM shim to guard the browser-guard workaround, using a throwaway
 offline credentials file so no real token or network request is involved. These
 still run in the default suite; they are named to signal that they cross an
 integration boundary rather than testing a unit in isolation.
+
+### GitLab CI example security
+
+`test/gitlab-example-security.test.ts` is a root-level test (it sits at the
+`test/` root rather than under a subsystem directory) that guards the
+**GitLab CI example** (`examples/openwiki-update.gitlab-ci.yml`) against leaking
+Git credentials. It does not run the pipeline; it reads the example YAML,
+parses it with the `yaml` package, and asserts on both the parsed structure and
+the raw text that credentials never reach a remote URL or a traced command:
+
+- **No embedded credentials in URLs.** The raw example text must not match a
+  `https?://[^/\s]+@` URL (no `user@host` credentials-in-URL form).
+- **Tracing disabled around the token.** The text must contain `set +x` so
+  shell tracing is off while the temporary credential helper can read
+  `OPENWIKI_GITLAB_TOKEN`, and the helper script is written through a
+  heredoc guarded by `<<'EOF'` so it is not expanded or echoed.
+- **Token delivered via a credential helper, not the environment.** The text
+  must contain `credential.helper="$credential_helper"` (a throwaway `mktemp`
+  helper that prints `oauth2`/`$OPENWIKI_GITLAB_TOKEN`) and the literal
+  `"$OPENWIKI_GITLAB_TOKEN"` reference, so the token is handed to Git through a
+  short-lived file rather than a shell argument.
+- **Push addresses the host by CI variables.** The push line must read
+  `push "https://${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"`, using
+  `CI_SERVER_HOST`/`CI_PROJECT_PATH` rather than a hardcoded or
+  credential-bearing URL.
+- **Script is a parseable array.** `config.openwiki_update.script` must be an
+  `Array` so a structural edit to the example cannot silently break the YAML
+  the security assertions depend on.
+
+This test pins the example's credential hygiene so a future edit that
+reintroduces a `user@` URL, drops `set +x`, or inlines the token into a traced
+command fails the suite rather than shipping an unsafe CI template.

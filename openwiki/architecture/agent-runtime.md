@@ -12,8 +12,10 @@ tags:
   - langchain
 verified:
   - by: openwiki/0.9.0
-    at: 2026-11-11T08:06:00.631Z
+    at: 2026-11-24T08:06:11.729Z
 sources:
+  - id: openwiki-source-34a5e30966a238b15ae701a9
+    resource: repo://.changeset/safe-file-glob-patterns.md
   - id: openwiki-source-0ad86abe7202c4e4d6897f34
     resource: repo://src/agent/agent-backend.ts
   - id: openwiki-source-f8b008ed89162a0e204fc02d
@@ -50,13 +52,15 @@ sources:
     resource: repo://src/integrations/mcp/stdio.ts
   - id: openwiki-source-ebe194cbeaa2594a6699f9a1
     resource: repo://src/model-availability.ts
+  - id: openwiki-source-0770fdf80fcdcaa96b06ee77
+    resource: repo://test/agent/conversation-history-offload.test.ts
   - id: openwiki-source-21fe6d4741a8225393c37599
     resource: repo://test/agent/create-model.test.ts
   - id: openwiki-source-6e76d6023798412a72871e94
     resource: repo://test/agent/entra-auth.test.ts
   - id: openwiki-source-d485c898eb60ebb173072eab
     resource: repo://test/agent/stream-redaction.test.ts
-generated: { by: "openwiki/0.9.0", at: "2026-11-11T08:06:00.631Z" }
+generated: { by: "openwiki/0.9.0", at: "2026-11-24T08:06:11.729Z" }
 ---
 
 # Agent Runtime, Models, and Middleware
@@ -169,7 +173,14 @@ For `gemini-enterprise`, the API surface is a function of the model id, not the 
 
 `createOpenWikiAgentGraph` constructs the DeepAgent from the initialized model. It creates an `OpenWikiLocalShellBackend` rooted at the run cwd (with `docsOnly` enabled for every command except chat), wraps it in a composite backend that adds fixed virtual mounts, and passes the middleware pipeline, connector tools, filesystem permissions, and command-specific system prompt to `createDeepAgent`. Before assembling the middleware it also resolves three pieces of localized runtime state: a translation plan (`resolveTranslationPlan`, defined for `update` runs only), the localized index heading labels (`resolveIndexLabels`) used by the deterministic directory indexes, and the localized fallback `conceptType` stamped on pages the OKF pass has to repair — both label maps fall back to English for languages not in the static tables.
 
-The composite backend (`createAgentBackend`) mounts two additional read-only virtual filesystems alongside the wiki backend: `/conversation_history/` for DeepAgents' history offload and `/skills/` for the bundled skills. A shared filesystem permission set additionally denies writes under both `/skills/**` and the conversation-history mount, and the composite backend converts a known upstream broad-glob recursion overflow into a bounded, model-facing "narrow your search" error instead of crashing the run.
+The composite backend (`createAgentBackend`) mounts two additional read-only virtual filesystems alongside the wiki backend: `/conversation_history/` for DeepAgents' history offload and `/skills/` for the bundled skills. A shared filesystem permission set additionally denies writes under both `/skills/**` and the conversation-history mount.
+
+`OpenWikiCompositeBackend` overrides both `glob` and `grep` to validate the glob pattern *before* routing it to any mounted backend, turning unsafe input into a bounded, model-facing `{ error }` instead of crashing the run. The pre-expansion safety layer is `globPatternError`, applied to the glob pattern in `glob` and to the `glob` file filter (defaulting to the empty string when `null`) in `grep`:
+
+- **Parenthesized patterns are rejected.** Any pattern matching `/[()]/` — including the extglob forms an agent might borrow from a shell (e.g. `+(*a)`, `*(a*)`, `**/+(*a).ts`) and parenthesized fragments nested inside a brace group (`{+(*a),*.ts}`) or a character class (`[+](a+)+$`) — returns "Parenthesized glob patterns are disabled for safety…" before any matcher runs. This blocks an unpatched picomatch denial-of-service vector; agents are steered to simple wildcards or separate searches, and literal `grep` queries are unaffected.
+- **Excessive brace nesting is rejected.** `exceedsGlobBraceNesting` counts unescaped `{`/`}` depth up to `MAX_GLOB_BRACE_NESTING` (100) without interpreting the rest of the glob syntax, returning "Glob pattern nesting is too deep…" once depth exceeds the cap so the pattern never reaches a recursive parser.
+
+Beyond pre-validation, `OpenWikiCompositeBackend.glob` preserves the existing broad-glob handling: if `super.glob` throws a `RangeError` whose message is "Maximum call stack size exceeded" (DeepAgents' recoverable recursion overflow on a `**/*`-style broad pattern), it is caught and returned as the bounded "Glob search was too broad…" error; any other thrown error propagates.
 
 The middleware array is assembled conditionally. Personal (`local-wiki`) runs mount a filesystem middleware first — `createFilesystemMiddleware` over the composite backend with `AGENT_FILESYSTEM_PERMISSIONS` and the six `ls`/`read_file`/`glob`/`grep`/`write_file`/`edit_file` tools — because personal runs expose no shell tool regardless of command. Chat runs then mount nothing else. Non-chat runs append the optional translation middleware (when a plan resolved) followed by the OKF index middleware.
 
@@ -180,7 +191,7 @@ sequenceDiagram
   participant Composite as createAgentBackend
   participant DA as createDeepAgent
   Opts->>Wiki: new backend docsOnly openWikiIgnore outputMode
-  Wiki->>Composite: createAgentBackend mounts history and skills
+  Wiki->>Composite: createAgentBackend mounts history, skills, and glob/grep safety
   Opts->>Opts: resolveTranslationPlan update only
   Opts->>Opts: resolveIndexLabels and resolveConceptTypeLabel
   Opts->>DA: model, connector tools, backend, permissions, systemPrompt

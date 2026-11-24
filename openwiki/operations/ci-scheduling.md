@@ -1,7 +1,7 @@
 ---
 type: operations-guide
 title: CI Scheduling and Self-Update
-description: How OpenWiki runs scheduled self-updates on GitHub Actions, GitLab CI, and Bitbucket Pipelines to open a docs pull request on change, how the scheduling module parses and manages cron expressions, and the ephemeral-runner resume caveat.
+description: How OpenWiki runs scheduled self-updates on GitHub Actions, GitLab CI, and Bitbucket Pipelines to open a docs pull request on change, how the scheduling module parses and manages cron expressions, and the ephemeral-runner resume caveat — including the ephemeral credential-helper Git authentication used by the GitLab CI example.
 tags:
   [
     scheduling,
@@ -35,12 +35,14 @@ sources:
     resource: repo://src/config/constants.ts
   - id: openwiki-source-c923e23504de7a6af7799a24
     resource: repo://src/scheduling/schedules.ts
+  - id: openwiki-source-619574be5673e1bc96e66fd0
+    resource: repo://test/gitlab-example-security.test.ts
   - id: openwiki-source-7cf549510278a62e11ae8280
     resource: repo://test/scheduling/schedules.test.ts
-generated: { by: "openwiki/0.7.1", at: "2026-10-07T08:10:39.081Z" }
+generated: { by: "openwiki/0.9.0", at: "2026-11-24T08:06:11.729Z" }
 verified:
-  - by: openwiki/0.7.3
-    at: 2026-11-02T08:07:01.639Z
+  - by: openwiki/0.9.0
+    at: 2026-11-24T08:06:11.729Z
 ---
 
 # CI Scheduling and Self-Update
@@ -179,7 +181,8 @@ update PRs:
 - `examples/openwiki-update.yml` — GitHub Actions (canonical example).
 - `examples/openwiki-update-auto-merge.yml` — GitHub Actions variant that
   enables auto-merge for the update PR.
-- `examples/openwiki-update.gitlab-ci.yml` — GitLab CI.
+- `examples/openwiki-update.gitlab-ci.yml` — GitLab CI (the secure-credential
+  variant: push authentication uses an ephemeral Git credential helper).
 - `examples/openwiki-update.bitbucket-pipelines.yml` — Bitbucket Pipelines.
 
 The live workflow the OpenWiki repository itself runs is
@@ -238,6 +241,39 @@ trailing **"Propagate OpenWiki failure"** step (`exit 1` when the outcome is
 Both the example and the live workflow delete the transient `openwiki/.run.json`
 run-state file before creating the PR, so the partial progress that survives is
 the committed wiki, not leftover in-process state.
+
+#### Secure Git authentication in the GitLab example
+
+The GitLab and Bitbucket examples differ most in how they authenticate the push.
+The GitLab example never embeds the token in a remote URL: after committing, it
+suppresses shell tracing (`set +x`), writes a tiny credential-helper script to a
+`mktemp` file (mode `700`, removed by an EXIT trap), and pushes with
+
+```sh
+git -c credential.helper= -c credential.helper="$credential_helper" \
+  push "https://${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$OPENWIKI_BRANCH"
+```
+
+The helper answers Git's `get` credential query with the username `oauth2` and
+the password `$OPENWIKI_GITLAB_TOKEN` (a protected, masked CI/CD variable), so
+the token never persists in `.git/config` or any remote URL and never appears in
+traced CI logs. The leading `-c credential.helper=` clears any system/helper
+configuration before the ephemeral helper is attached, and the helper file is
+deleted (and the trap disarmed) immediately after the push. The merge request is
+then opened through the GitLab REST API
+(`${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests`) with the token
+supplied as a `PRIVATE-TOKEN` header, targeting `CI_DEFAULT_BRANCH`.
+
+By contrast, the Bitbucket example still embeds the token in the push URL
+(`https://x-token-auth:${OPENWIKI_BITBUCKET_TOKEN}@bitbucket.org/...`), which
+leaves it in the remote configuration for the life of the job; the GitLab
+example is the secure-credential variant. This is pinned by
+`test/gitlab-example-security.test.ts`, which fails if the example ever matches
+an authenticated-remote-URL pattern (`https://user@host`), loses `set +x`, or
+drops the `credential.helper="$credential_helper"` invocation, the quoted
+heredoc (`<<'EOF'`) that prevents shell expansion inside the helper script, the
+`"$OPENWIKI_GITLAB_TOKEN"` reference, or the tokenless push URL built from
+`CI_SERVER_HOST`/`CI_PROJECT_PATH`.
 
 #### Trace thread per update
 
@@ -391,6 +427,14 @@ The shared LangSmith thread grouping that gives one trace thread per update is
 pinned by the repository-runner suite, not the scheduling suite; see
 [repository generation](../workflows/repository-generation.md) and
 [testing overview](../testing/overview.md) for those tests.
+
+The credential hygiene of the GitLab CI example is pinned separately by
+`test/gitlab-example-security.test.ts`. It parses the example YAML, then fails
+if the file ever matches an authenticated-remote-URL pattern
+(`https://user@host`), or loses any of `set +x`,
+`credential.helper="$credential_helper"`, the quoted heredoc `<<'EOF'`, the
+`"$OPENWIKI_GITLAB_TOKEN"` helper reference, or the tokenless push URL built
+from `CI_SERVER_HOST`/`CI_PROJECT_PATH`.
 
 ## Related pages
 

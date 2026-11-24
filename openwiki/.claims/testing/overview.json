@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:e1821469c61ed43277dacbb584b7ab336f674d3b82932b9f99eba5fad64913b5",
+  "pageVersion": "sha256:2c1257366d6b15f2242057a8dfc242bf7faa336843e02b1d3adb26655cbb11fc",
   "claims": [
     {
       "id": "claim_fe4e1fc83ccd4d9290e42536a6e48032",
@@ -1167,10 +1167,60 @@
           "version": "repo-lines-v1:sha256:a81e4abfa91a7d642230f877cd7e17db7dde0d58fd5521c9a608caed35e27200:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlNDcwNmNjMWU0M2E1NGE4NDM0ZjA4OWM2NzhiMmIzYjY5OTRjNGM5MmEyNjdmNzg4YWI3ZjAzNWY4Y2MyNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkMGEwY2NiN2QyNWI1NmVlNzdjYTQzZjAxOTBkMDVhZjhhOTUyYzNjNWVjNDQ2Y2ZlZThjMzY5NDc1YzliMTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxNmI5MTY1MzQwOTU5ODIwZDZmYjQ4OTZlYjlmYjNhNTYyMzIxZjUwZDdmOGZkMTcxNjIzM2RmMDRjZDhiMjAifQ"
         }
       ]
+    },
+    {
+      "id": "claim_a412c4b818224587ad75a4bb1c706152",
+      "statement": "test/gitlab-example-security.test.ts is a root-level test that guards the GitLab CI example (examples/openwiki-update.gitlab-ci.yml) against credential leakage by reading and parsing the YAML with the yaml package rather than running the pipeline. It asserts the raw text does not match a `https?://[^/\\s]+@` URL (no user@host credentials in URLs), contains `set +x` (tracing disabled while a temporary credential helper can read OPENWIKI_GITLAB_TOKEN), contains `credential.helper=\"$credential_helper\"` and the literal `\"$OPENWIKI_GITLAB_TOKEN\"` (token delivered through a short-lived mktemp helper rather than a shell argument), contains `<<'EOF'` (the helper script is written via a quoted heredoc), and contains the push line `push \"https://${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git\"` (the remote addressed by CI variables, not a hardcoded or credential-bearing URL). It also asserts `config.openwiki_update.script` is an Array so a structural edit cannot silently break the YAML the assertions depend on.",
+      "evidence": [
+        {
+          "resource": "repo://examples/openwiki-update.gitlab-ci.yml#L20-L45",
+          "version": "repo-lines-v1:sha256:b4db46ae25c23d897e30ba4828afebb9a50fddf8eee7b73d70c1bcfe04ebeb47:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3ZTljZTA0NDZlODA4YjI2MjMzOGNjYTFjMDI2ZTY0MDJiMWU0MWU2M2M3ZGMzMDU1M2IzNWNjMjg0MzdhY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViODc0OWY1ZWUyOTU4ZmJmNGU3ZDc2MDkxMDIzN2U4ZmQxMzExZmNhMjUxZDczZGYyYjlmZjNiZmFiNmY2MjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhZWY1MGY1NmRkYTQ0NTM4ODljN2ZhMjQ3NDBmZDhkNTI1NjkxMWNjZTYzYWJkMmZjMzA0NzBhYjIzMjNjMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlZTY3NzM0NzZjZDU0ZDAxODQyNzczMzI2N2IzNzFhZmYwNDMxYThlYzY1ZGRmNWU5ZDgxNGY1NjIyZWYzMjIifQ"
+        },
+        {
+          "resource": "repo://test/gitlab-example-security.test.ts#L1-L27",
+          "version": "repo-lines-v1:sha256:3f18612241bbc244a8c82eef7d1ce17d14e1ac194934f1c796f45b8a557ab5b7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlYmFiYTYzODM0OWFiMGU5MGQ0Yzc5OTY4Nzc3ZDk4YTE3YjMwNTU1MmI1NjhlYzA3YzM2MmFhMjA5N2U3ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d158ad95d8e486bb40caa2dd8ca055a",
+      "statement": "test/agent/conversation-history-offload.test.ts pins the composite-backend glob/grep safety rejections layered in front of DeepAgents' CompositeBackend in src/agent/agent-backend.ts. A test.each over both docsOnly modes and the three virtual roots (/, /skills/, and CONVERSATION_HISTORY_MOUNT) feeds parenthesized patterns (+(*) , +(*a), *(a*), **/+(*a).ts, {+(*a),*.ts}, +{(}*a{)}, \\+\\(*a\\), [+](a+)+$) to backend.glob and backend.grep and asserts each returns an error containing 'disabled for safety' while the underlying CompositeBackend.glob/grep are never called; ordinary filters (src/**/*.{ts,tsx} and a literal grep query with a *.{ts,tsx} glob) are still forwarded. A pattern with more than 100 brace-nesting levels returns 'Glob pattern nesting is too deep. Retry with a simpler pattern.' without touching the backend (and the same check guards grep's glob argument), while a normal src/*.{ts,tsx} brace pattern still expands. When OpenWikiLocalShellBackend.glob throws RangeError('Maximum call stack size exceeded') (armed via mockRejectedValueOnce), backend.glob('**/*','/') converts it to the tool error 'Glob search was too broad. Retry with a narrower path or pattern.' rather than propagating.",
+      "evidence": [
+        {
+          "resource": "repo://src/agent/agent-backend.ts#L138-L158",
+          "version": "repo-lines-v1:sha256:cc7d463e6aac8cd0d825528d191f17e57d29020bc736507c5d6b6c1919ae8d45:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNzExMjdmN2Y1ZjE3MTdiOTZlN2U5NzY5MGE3ZDE4MWE1MDcyMzdmY2FkMTg4NDBiYmIwOTM0MDIyYTkyMGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjZDM1MmM5NGNjMmQ2ZmEyYTViNTdjZWYyNmEzN2ViNDFkZGM5YWZjNzEzNDE5NDVjMDllNjM2YjFlNmJjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/agent/agent-backend.ts#L26-L70",
+          "version": "repo-lines-v1:sha256:9bacbeed62b3481e7dc44ca4222592239b4c4cad20df8ac54aa90336e3118265:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZDc0ZjAzMTVlYjUzNzUyNDMwNDAzMDE2MThhZjU0YTkxOTEwOTU5MGNlZTEyNzEwYzMyNzZiMzM0MzQ3NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4YjFkMTg5ODhiMjQwYzI1MzhlOGQzMTNhZDY1MmVjOWRmM2Y4MDBhYWZmMDAwNjc0ZjM3OWEwN2Q3YWNiMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzNGIxYzcyNmEzODkwZmM3OWYyMjczMTQ2OTc1ZGY2ZDU3Y2RkNGNiZDYyZGQxMjExZDMwMTExZjJmMjc3MzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4YTkxNzU5NzJmZTE1ZTJhOTY0MWFiMTMxZjU3MWU2YzdjYWJjYTA2ODM3NjJlYmE1ZjIzNTNlNDgzYzNkNTYifQ"
+        },
+        {
+          "resource": "repo://test/agent/conversation-history-offload.test.ts#L19-L140",
+          "version": "repo-lines-v1:sha256:c73abecdf36a742c322344c1a9ddc76be851da39d89d65b30641685103bcba7b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5Y2UyYzcwN2QyYTM1NGMyNjg1NzliMDRiNDhiZjhlZjA1MGJlY2YxOWYzY2U2ZDY1MTBjMWYzYjc5M2M5MTgyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJlZDBkNmRkYmQ2YzUxNGVkZTExYTc3YmMyYjk3MjBiNTkxMDMxNmYwOWZiNDA4YzliMWI2NzYxZjM2YjNjYTYzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmZmNmNzM3NTQ5OWQxMTQ2M2YxMWMwOTA0Zjg0ZWVkYjM1Y2IyNmZhODZhM2RmZTgzNTk2NGJkYWQzNzE4NDRmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxY2I1MDQyZWE5MDQyMWQzM2QyYjRhOTI1ZTAzNDNiMGNmN2ZhMmU3ODNhMmQ5YTYxODBjMTQ2NGQ0Mjg1NzMzIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a25ad0b12744b0c9ab2b10ff898a1f3",
+      "statement": "test/agent/conversation-history-offload.test.ts pins the conversation-history and skills virtual mounts created by createAgentBackend (src/agent/agent-backend.ts). Writing `${CONVERSATION_HISTORY_MOUNT}session_<id>.md` persists to the separate historyDir (a FilesystemBackend mounted at /conversation_history/), and no conversation_history directory is created inside repoDir; follow-up offloads append via backend.edit and the agent can read the offloaded history back through the same virtual path, for both docsOnly (summarization offload) and non-docs-only (chat-mode history offload) runs. AGENT_FILESYSTEM_PERMISSIONS contains exactly one deny write rule for `${CONVERSATION_HISTORY_MOUNT}**` and a deny write rule for `/skills/**`, so the model's filesystem tools cannot write into the mounts (preventing prompt-injected repository content from persisting attacker text the summarization middleware later reads back), while the middleware writes through the backend directly and is unaffected. The 'mount prefix matches deepagents historyPathPrefix default' test drives the real createSummarizationMiddleware (with no historyPathPrefix override, since createDeepAgent exposes none) through a recording backend and asserts the offload path's directory equals CONVERSATION_HISTORY_MOUNT, so a dependency bump that moves DeepAgents' default offload location fails the test instead of silently reintroducing a mount mismatch.",
+      "evidence": [
+        {
+          "resource": "repo://src/agent/agent-backend.ts#L16-L17",
+          "version": "repo-lines-v1:sha256:56f6fe41dac3c01f67a882a4c53a4d5ead78ba9523d3908ba863708ec778731a:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyYTQyOTM4MmIyZTE0NzE4ZTBlMzdiMDU3MGE4YTE3MDI5OTFmY2Q4NDk4Y2Q4NDA2MGE4YmY0ZjA1MDE3YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTQ0NDM1MTcyMzFhMjZiMWEwZTRkOTE2OGQ0NTdkZDgzMjRiOWI3MGY3OTZlZDg2MjllZjZlN2QyMzE0NjQ2YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmFlNWEwNjllNjI0ZTc1MDg4YTA3YjAyODBiYjM5MmFlZjc5ZTc2N2JmYjVmZWQ4YTQ5MmEyYmQxMDk0YTM4NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzI1MDI1MzI1YzUxYzhhYTNkMjVjYzM3OTBkZjQxMGM1YjQ1Zjc4NzNmMDcwMTU3NjZmNDE4ZDdiMGEzNjA0ZiJ9"
+        },
+        {
+          "resource": "repo://src/agent/agent-backend.ts#L63-L104",
+          "version": "repo-lines-v1:sha256:05f2ab72155aa146b6265c7e3a5dbfc353328896b6d529f995b9bc34ffb80f48:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwYmRjODkzOTRlOTc5ODQyZGVmYjlmNmMzN2RiNTRlOWM5ZWFiNTQ0M2MyNjk1NTY2YTE2YWMyYTZkYTA3Y2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMzg3MDY5YWIxZDE1ZWVkNDBjZWJiOWI5Y2NkYjNiZDRiZjBjNGZjZmY5MzhlMzMzZjFkNzcyZGE3ZDVhZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3OTI5ZTkxZTBmOTljM2U4MjVkZTY5YjQzNWZiNjQ4NGQxYjBhMWRmMmY0NjU2MWFiZjFhMjlmMDQxODhiODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY5NTMyZTZlYjdmZTM5ZjVjNDEyODVmMGQ0ODMwYTlkODVmNGQ5NjVhMjZmYWJmMWZkNThkYTY4MjQxYjMzOGEifQ"
+        },
+        {
+          "resource": "repo://test/agent/conversation-history-offload.test.ts#L144-L261",
+          "version": "repo-lines-v1:sha256:ca5d1468aafad7250fdb28cc60193599778cdfc50b9b87fe31f0f8941135143a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxY2I1MDQyZWE5MDQyMWQzM2QyYjRhOTI1ZTAzNDNiMGNmN2ZhMmU3ODNhMmQ5YTYxODBjMTQ2NGQ0Mjg1NzMzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.9.0",
-    "at": "2026-11-11T08:06:00.631Z"
+    "at": "2026-11-24T08:06:11.729Z"
   }
 }
